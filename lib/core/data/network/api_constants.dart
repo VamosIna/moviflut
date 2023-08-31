@@ -9,10 +9,10 @@ class ApiConstants {
   static const String baseVideoUrl = 'https://www.youtube.com/watch?v=';
 
   static const String moviePlaceHolder =
-      'https://davidkoepp.com/wp-content/themes/blankslate/images/Movie%20Placeholder.jpg';
+      '';
 
   static const String castPlaceHolder =
-      'https://palmbayprep.org/wp-content/uploads/2015/09/user-icon-placeholder.png';
+      '';
 
   // movies paths
   static const String nowPlayingMoviesPath =
