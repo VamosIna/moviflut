@@ -4,21 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:movie_app/features/search/domain/entities/search_result_item.dart';
 import 'package:movie_app/features/search/domain/usecases/search_usecase.dart';
-import 'package:stream_transform/stream_transform.dart';
 
 part 'search_event.dart';
 part 'search_state.dart';
 
-const _duration = Duration(milliseconds: 400);
-
-EventTransformer<Event> debounce<Event>(Duration duration) {
-  return (events, mapper) => events.debounce(duration).switchMap(mapper);
-}
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   SearchBloc(this._searchUseCase) : super(const SearchState()) {
-    on<GetSearchResultsEvent>(_getSearchResults,
-        transformer: debounce(_duration));
+    on<GetSearchResultsEvent>(_getSearchResults);
   }
 
   final SearchUseCase _searchUseCase;
