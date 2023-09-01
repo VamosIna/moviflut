@@ -6,6 +6,7 @@ import 'package:movie_app/features/favorites/domain/usecases/add_favorite_item_u
 import 'package:movie_app/features/favorites/domain/usecases/check_if_item_added_usecase.dart';
 import 'package:movie_app/features/favorites/domain/usecases/get_favorites_list_items_usecase.dart';
 import 'package:movie_app/features/favorites/domain/usecases/remove_watchlist_item_usecase.dart';
+import 'package:movie_app/features/favorites/domain/usecases/search_favorites_list_item_usecase.dart';
 import 'package:movie_app/features/favorites/presentation/controllers/favorites_list_bloc/favorites_list_bloc.dart';
 import 'package:movie_app/features/movies/data/datasource/movies_remote_data_source.dart';
 import 'package:movie_app/features/movies/data/repository/movies_repository_impl.dart';
@@ -54,6 +55,7 @@ class ServiceLocator {
     sl.registerLazySingleton(() => GetAllTopRatedMoviesUseCase(sl()));
     sl.registerLazySingleton(() => SearchUseCase(sl()));
     sl.registerLazySingleton(() => GetFavoritesListItemsUseCase(sl()));
+    sl.registerLazySingleton(() => SearchFavoritesListItemsUseCase(sl()));
     sl.registerLazySingleton(() => AddFavoriteListItemUseCase(sl()));
     sl.registerLazySingleton(() => RemoveFavoriteListItemUseCase(sl()));
     sl.registerLazySingleton(() => CheckIfItemAddedUseCase(sl()));
@@ -65,6 +67,6 @@ class ServiceLocator {
     sl.registerFactory(() => PopularMoviesBloc(sl()));
     sl.registerFactory(() => TopRatedMoviesBloc(sl()));
     sl.registerFactory(() => SearchBloc(sl()));
-    sl.registerFactory(() => FavoritesListBloc(sl(), sl(), sl(), sl()));
+    sl.registerFactory(() => FavoritesListBloc(sl(), sl(), sl(), sl(),sl()));
   }
 }

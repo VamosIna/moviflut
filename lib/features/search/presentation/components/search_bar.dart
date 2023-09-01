@@ -5,16 +5,16 @@ import 'package:movie_app/core/resources/app_strings.dart';
 import 'package:movie_app/core/resources/app_values.dart';
 import 'package:movie_app/features/search/presentation/controllers/search_bloc/search_bloc.dart';
 
-class SearchBar extends StatefulWidget {
-  const SearchBar({
+class SearchBarX extends StatefulWidget {
+  const SearchBarX({
     super.key,
   });
 
   @override
-  State<SearchBar> createState() => _SearchBarState();
+  State<SearchBarX> createState() => _SearchBarState();
 }
 
-class _SearchBarState extends State<SearchBar> {
+class _SearchBarState extends State<SearchBarX> {
   final _textController = TextEditingController();
 
   @override

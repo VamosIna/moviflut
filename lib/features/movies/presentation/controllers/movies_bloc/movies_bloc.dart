@@ -12,10 +12,11 @@ import '../../../../favorites/domain/usecases/get_favorites_list_items_usecase.d
 
 class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
   final GetMoviesUseCase _getMoviesUseCase;
-  final GetFavoritesListItemsUseCase _getFavoritesListItemsUseCase;
+  GetFavoritesListItemsUseCase? _getFavoritesListItemsUseCase;
 
   MoviesBloc(
-    this._getMoviesUseCase,this._getFavoritesListItemsUseCase,
+    this._getMoviesUseCase,
+      this._getFavoritesListItemsUseCase,
   ) : super(const MoviesState()) {
     on<GetMoviesEvent>(_getMovies);
   }
@@ -27,8 +28,7 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
         status: RequestStatus.loading,
       ),
     );
-    final result2 = await _getFavoritesListItemsUseCase.call(const NoParameters());
-    print("TAPPEDDDDD : ${result2.fold((l) => l.message.toString(), (r) => r.toString())}");
+    final result2 = await _getFavoritesListItemsUseCase!(const NoParameters());
     final result = await _getMoviesUseCase(const NoParameters());
     result.fold(
       (l) => emit(

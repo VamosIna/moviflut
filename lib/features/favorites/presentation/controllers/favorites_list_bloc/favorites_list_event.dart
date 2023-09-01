@@ -19,6 +19,16 @@ class AddFavoriteListItemEvent extends FavoritesListEvent {
   @override
   List<Object?> get props => [media];
 }
+class SearchFavoriteListItemEvent extends FavoritesListEvent {
+  final String media;
+
+  const SearchFavoriteListItemEvent({
+    required this.media,
+  });
+
+  @override
+  List<Object?> get props => [media];
+}
 
 class RemoveFavoriteListItemEvent extends FavoritesListEvent {
   final int index;

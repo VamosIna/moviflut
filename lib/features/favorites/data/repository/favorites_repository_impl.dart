@@ -22,6 +22,16 @@ class FavoriteListRepositoryImpl extends FavoritesListRepository {
       return Left(DatabaseFailure(failure.message));
     }
   }
+  @override
+  Future<Either<Failure, List<Media>>> searchFavoritesListItems(String q) async {
+    final result =
+        (await _baseFavoriteslistLocalDataSource.searchFavoriteListItems(q));
+    try {
+      return Right(result);
+    } on HiveError catch (failure) {
+      return Left(DatabaseFailure(failure.message));
+    }
+  }
 
   @override
   Future<Either<Failure, int>> addFavoriteListItem(Media media) async {

@@ -8,6 +8,7 @@ import 'package:movie_app/features/favorites/domain/usecases/add_favorite_item_u
 import 'package:movie_app/features/favorites/domain/usecases/check_if_item_added_usecase.dart';
 import 'package:movie_app/features/favorites/domain/usecases/get_favorites_list_items_usecase.dart';
 import 'package:movie_app/features/favorites/domain/usecases/remove_watchlist_item_usecase.dart';
+import 'package:movie_app/features/favorites/domain/usecases/search_favorites_list_item_usecase.dart';
 
 part 'favorites_list_state.dart';
 part 'favorites_list_event.dart';
@@ -18,8 +19,10 @@ class FavoritesListBloc extends Bloc<FavoritesListEvent, FavoritesListState> {
     this._addFavoriteListItemUseCase,
     this._removeFavoriteListItemUseCase,
     this._checkIfItemAddedUseCase,
+      this._searchFavoriteListItemUseCase,
   ) : super(const FavoritesListState()) {
     on<GetFavoritesListItemsEvent>(_getFavoritesListItems);
+    on<SearchFavoriteListItemEvent>(_searchFavoriteListItem);
     on<AddFavoriteListItemEvent>(_addFavoriteListItem);
     on<RemoveFavoriteListItemEvent>(_removeFavoriteListItem);
     on<CheckItemAddedEvent>(_checkItemAdded);
@@ -27,6 +30,7 @@ class FavoritesListBloc extends Bloc<FavoritesListEvent, FavoritesListState> {
 
   final GetFavoritesListItemsUseCase _getFavoritesListItemsUseCase;
   final AddFavoriteListItemUseCase _addFavoriteListItemUseCase;
+  final SearchFavoritesListItemsUseCase _searchFavoriteListItemUseCase;
   final RemoveFavoriteListItemUseCase _removeFavoriteListItemUseCase;
   final CheckIfItemAddedUseCase _checkIfItemAddedUseCase;
 
@@ -88,6 +92,42 @@ class FavoritesListBloc extends Bloc<FavoritesListEvent, FavoritesListState> {
           id: r,
         ),
       ),
+    );
+  }
+  Future<void> _searchFavoriteListItem(
+      SearchFavoriteListItemEvent event, Emitter<FavoritesListState> emit) async {
+    emit(
+      const FavoritesListState(
+        status: FavoritesListRequestStatus.loading,
+      ),
+    );
+    final result = await _searchFavoriteListItemUseCase.call(event.media);
+    result.fold(
+          (l) {
+        emit(
+          FavoritesListState(
+            status: FavoritesListRequestStatus.error,
+            message: l.message,
+          ),
+        );
+      },
+          (r) {
+        print("TAPPEDDDDD : ${r}");
+        if (r.isEmpty) {
+          emit(
+            const FavoritesListState(
+              status: FavoritesListRequestStatus.empty,
+            ),
+          );
+        } else {
+          emit(
+            FavoritesListState(
+              status: FavoritesListRequestStatus.loaded,
+              items: r,
+            ),
+          );
+        }
+      },
     );
   }
 
